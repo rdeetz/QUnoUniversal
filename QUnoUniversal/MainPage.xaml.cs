@@ -1,30 +1,210 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+﻿// <copyright file="MainPage.xaml.cs" company="Mooville">
+//   Copyright © 2020 Roger Deetz. All rights reserved.
+// </copyright>
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
-namespace QUnoUniversal
+namespace Mooville.QUno.Universal
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
+    using System;
+    using System.Collections.Generic;
+    using Windows.ApplicationModel;
+    using Windows.ApplicationModel.Resources;
+    using Windows.Storage;
+    using Windows.Storage.Pickers;
+    using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Controls;
+    using Windows.UI.Xaml.Input;
+    using Windows.UI.Xaml.Navigation;
+    using Windows.System;
+    using Mooville.QUno.Model;
+    using Mooville.QUno.Universal.Model;
+    using Mooville.QUno.Universal.ViewModel;
+
     public sealed partial class MainPage : Page
     {
+        private readonly MainViewModel viewModel;
+
         public MainPage()
         {
             this.InitializeComponent();
+
+            if (!DesignMode.DesignModeEnabled)
+            {
+                var resourceLoader = ResourceLoader.GetForCurrentView();
+                var logMessagePlay = resourceLoader.GetString("LogMessagePlay");
+                var logMessageWildPlay = resourceLoader.GetString("LogMessageWildPlay");
+                var logMessageDraw = resourceLoader.GetString("LogMessageDraw");
+
+                this.viewModel = new MainViewModel(logMessagePlay, logMessageWildPlay, logMessageDraw);
+                this.DataContext = this.viewModel;
+                this.NavigationCacheMode = NavigationCacheMode.Required;
+
+                this.buttonNew.Click += this.ButtonNew_Click;
+                this.buttonOpen.Click += this.ButtonOpen_Click;
+                this.buttonSave.Click += this.ButtonSave_Click;
+                this.buttonSettings.Click += this.ButtonSettings_Click;
+                this.buttonPlay.Click += this.ButtonPlay_Click;
+                this.buttonDraw.Click += this.ButtonDraw_Click;
+                this.buttonNewGame.Click += this.ButtonNewGame_Click;
+                this.listHumanHand.SelectionChanged += this.ListHumanHand_SelectionChanged;
+                this.listHumanHand.KeyUp += this.ListHumanHand_KeyUp;
+                this.listHumanHand.DoubleTapped += this.ListHumanHand_DoubleTapped;
+                this.buttonPlay.IsEnabled = false;
+            }
+        }
+
+        public MainViewModel ViewModel
+        {
+            get
+            {
+                return this.viewModel;
+            }
+        }
+
+        private async void StartGameUI()
+        {
+            NewGameDialog newGameDialog = new NewGameDialog();
+            ContentDialogResult result = await newGameDialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                var players = newGameDialog.Players;
+                this.viewModel.StartGame(players);
+            }
+
+            return;
+        }
+
+        private async void PlayCardUI()
+        {
+            Card card = this.listHumanHand.SelectedItem as Card;
+
+            if (card != null)
+            {
+                if (card.Color == Color.Wild)
+                {
+                    WildColorDialog wildColorDialog = new WildColorDialog();
+                    ContentDialogResult result = await wildColorDialog.ShowAsync();
+
+                    if (result == ContentDialogResult.Primary)
+                    {
+                        Color? wildColor = wildColorDialog.SelectedColor as Color?;
+                        this.viewModel.PlayCard(card, wildColor);
+                    }
+                }
+                else
+                {
+                    this.viewModel.PlayCard(card, null);
+                }
+            }
+
+            return;
+        }
+
+        private void ButtonNew_Click(object sender, RoutedEventArgs e)
+        {
+            this.StartGameUI();
+
+            return;
+        }
+
+        private async void ButtonOpen_Click(object sender, RoutedEventArgs e)
+        {
+            FileOpenPicker fileOpenPicker = new FileOpenPicker();
+            fileOpenPicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            fileOpenPicker.FileTypeFilter.Add(@".quno");
+
+            StorageFile file = await fileOpenPicker.PickSingleFileAsync();
+
+            if (file != null)
+            {
+                JsonGameSerializer serializer = new JsonGameSerializer();
+                var game = serializer.LoadFromFileAsync(file);
+                // Since we cannot currently count on the results of 
+                // deserializing the game file, we are doing nothing.
+            }
+
+            return;
+        }
+
+        private async void ButtonSave_Click(object sender, RoutedEventArgs e)
+        {
+            FileSavePicker fileSavePicker = new FileSavePicker();
+            fileSavePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            fileSavePicker.FileTypeChoices.Add(@"QUno Files", new List<string>() { ".quno" });
+            fileSavePicker.SuggestedFileName = @"My Game";
+
+            StorageFile file = await fileSavePicker.PickSaveFileAsync();
+
+            if (file != null)
+            {
+                JsonGameSerializer serializer = new JsonGameSerializer();
+                serializer.SaveToFileAsync(this.viewModel.Game, file);
+            }
+
+            return;
+        }
+
+        private void ButtonSettings_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(SettingsPage));
+
+            return;
+        }
+
+        private void ButtonNewGame_Click(object sender, RoutedEventArgs e)
+        {
+            this.StartGameUI();
+
+            return;
+        }
+
+        private void ButtonPlay_Click(object sender, RoutedEventArgs e)
+        {
+            this.PlayCardUI();
+
+            return;
+        }
+
+        private void ButtonDraw_Click(object sender, RoutedEventArgs e)
+        {
+            this.viewModel.DrawCard();
+
+            return;
+        }
+
+        private void ListHumanHand_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // There is a bug here where if a card is selected that cannot play, 
+            // and then if you draw a card and play continues and comes back to you, 
+            // and the card that is selected can now play, the Play button will not 
+            // be enabled because the selection hasn't yet changed. It's an easy 
+            // workaround for the user, because you can just select a different card, 
+            // but it still sort of annoying.
+            Card card = this.listHumanHand.SelectedItem as Card;
+            this.buttonPlay.IsEnabled = this.viewModel.CanPlayCard(card);
+
+            return;
+        }
+
+        private void ListHumanHand_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                this.PlayCardUI();
+            }
+            else if (e.Key == VirtualKey.Space)
+            {
+                this.viewModel.DrawCard();
+            }
+
+            return;
+        }
+
+        private void ListHumanHand_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            this.PlayCardUI();
+
+            return;
         }
     }
 }

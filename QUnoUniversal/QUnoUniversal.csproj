@@ -122,7 +122,27 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\IGameSerializer2.cs" />
+    <Compile Include="NewGameDialog.xaml.cs">
+      <DependentUpon>NewGameDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QUnoCommands.cs" />
+    <Compile Include="SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\BooleanToVisibilityConverter.cs" />
+    <Compile Include="ViewModel\ColorToBrushConverter.cs" />
+    <Compile Include="ViewModel\DirectionToSymbolConverter.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ObjectToVisibilityConverter.cs" />
+    <Compile Include="ViewModel\RelayCommand.cs" />
+    <Compile Include="ViewModel\UniversalNewGameViewModel.cs" />
+    <Compile Include="ViewModel\UniversalSettingsProvider.cs" />
+    <Compile Include="ViewModel\ValueToSymbolConverter.cs" />
+    <Compile Include="WildColorDialog.xaml.cs">
+      <DependentUpon>WildColorDialog.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -148,6 +168,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="NewGameDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="WildColorDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -158,6 +190,9 @@
     <Reference Include="QUnoLibrary">
       <HintPath>..\Library\Debug\QUnoLibrary.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resources.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
