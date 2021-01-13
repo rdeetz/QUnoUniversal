@@ -117,8 +117,8 @@ namespace Mooville.QUno.Universal
 
             if (file != null)
             {
-                JsonGameSerializer serializer = new JsonGameSerializer();
-                var game = serializer.LoadFromFileAsync(file);
+                //JsonGameSerializer serializer = new JsonGameSerializer();
+                //var game = serializer.LoadFromFileAsync(file);
                 // Since we cannot currently count on the results of 
                 // deserializing the game file, we are doing nothing.
             }
@@ -137,8 +137,8 @@ namespace Mooville.QUno.Universal
 
             if (file != null)
             {
-                JsonGameSerializer serializer = new JsonGameSerializer();
-                serializer.SaveToFileAsync(this.viewModel.Game, file);
+                //JsonGameSerializer serializer = new JsonGameSerializer();
+                //serializer.SaveToFileAsync(this.viewModel.Game, file);
             }
 
             return;

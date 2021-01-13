@@ -5,7 +5,7 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("QUnoUniversal")]
+[assembly: AssemblyTitle("QUnoObjects")]
 [assembly: AssemblyDescription("An Uno-like card game.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Roger Deetz")]
