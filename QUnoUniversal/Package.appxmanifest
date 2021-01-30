@@ -7,11 +7,11 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="d1119453-b16c-42b2-9989-1cb7b326fd19"
-    Publisher="CN=Roger"
+    Name="52872RogerDeetz.QUno"
+    Publisher="CN=89C9C93F-636B-4C9B-BA43-291C4D8189C0"
     Version="5.0.0.0" />
 
-  <mp:PhoneIdentity PhoneProductId="d1119453-b16c-42b2-9989-1cb7b326fd19" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="79cca3fc-83bd-4c16-83c2-14a7fd35d140" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>QUno</DisplayName>
