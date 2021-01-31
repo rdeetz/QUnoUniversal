@@ -129,7 +129,8 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\IGameSerializer2.cs" />
+    <Compile Include="Model\IUniversalGameSerializer.cs" />
+    <Compile Include="Model\UniversalGameSerializer.cs" />
     <Compile Include="NewGameDialog.xaml.cs">
       <DependentUpon>NewGameDialog.xaml</DependentUpon>
     </Compile>

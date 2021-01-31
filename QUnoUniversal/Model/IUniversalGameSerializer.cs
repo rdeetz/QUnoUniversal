@@ -1,5 +1,5 @@
-﻿// <copyright file="IGameSerializer2.cs" company="Mooville">
-//   Copyright © 2020 Roger Deetz. All rights reserved.
+﻿// <copyright file="IUniversalGameSerializer.cs" company="Mooville">
+//   Copyright © 2021 Roger Deetz. All rights reserved.
 // </copyright>
 
 namespace Mooville.QUno.Universal.Model
@@ -11,7 +11,7 @@ namespace Mooville.QUno.Universal.Model
     /// <summary>
     /// Defines methods for serializing a <see cref="Game"/> object.
     /// </summary>
-    public interface IGameSerializer2
+    public interface IUniversalGameSerializer
     {
         /// <summary>
         /// Loads a <see cref="Game"/> from the specified file.

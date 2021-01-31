@@ -1,5 +1,5 @@
 ﻿// <copyright file="MainViewModel.cs" company="Mooville">
-//   Copyright © 2020 Roger Deetz. All rights reserved.
+//   Copyright © 2021 Roger Deetz. All rights reserved.
 // </copyright>
 
 namespace Mooville.QUno.Universal.ViewModel
@@ -27,7 +27,6 @@ namespace Mooville.QUno.Universal.ViewModel
     public class MainViewModel : ViewModelBase
     {
         private Game game;
-        private IGameSerializer gameSerializer;
         private ObservableCollection<Player> computerPlayers;
         private Player humanPlayer;
         private string title;
@@ -40,17 +39,7 @@ namespace Mooville.QUno.Universal.ViewModel
         private string logMessageDraw;
 
         public MainViewModel(string logMessagePlay, string logMessageWildPlay, string logMessageDraw)
-            : this(null, logMessagePlay, logMessageWildPlay, logMessageDraw)
         {
-        }
-
-        public MainViewModel(IGameSerializer gameSerializer, string logMessagePlay, string logMessageWildPlay, string logMessageDraw)
-        {
-            // The default constructor will provide a null gameSerializer, 
-            // and that is ok for this implementation because I am not going to use it.
-            // However I am leaving the parameter in the constructor in case 
-            // I create a base MainViewModel class, to ease compatibility.
-            this.gameSerializer = gameSerializer;
             this.computerPlayers = new ObservableCollection<Player>();
             this.isGameNotInProgress = true;
             this.logIndex = 0;
@@ -161,6 +150,41 @@ namespace Mooville.QUno.Universal.ViewModel
 
             this.IsGameNotInProgress = false;
             this.Winner = null;
+
+            return;
+        }
+
+        public void OpenGame(Game game)
+        {
+            if (this.game != null)
+            {
+                this.game.PlayerChanged -= new EventHandler(this.Game_PlayerChanged);
+                this.game = null;
+            }
+
+            this.computerPlayers.Clear();
+            this.logIndex = 0;
+            this.log.Clear();
+
+            this.game = game;
+            this.game.PlayerChanged += new EventHandler(this.Game_PlayerChanged);
+
+            foreach (var player in this.game.Players)
+            {
+                if (player.IsHuman)
+                {
+                    this.humanPlayer = player;
+                }
+                else
+                {
+                    this.computerPlayers.Add(player);
+                }
+            }
+
+            this.IsGameNotInProgress = false;
+            this.Winner = null;
+
+            this.OnPropertyChanged(String.Empty);
 
             return;
         }

@@ -1,5 +1,5 @@
 ﻿// <copyright file="MainPage.xaml.cs" company="Mooville">
-//   Copyright © 2020 Roger Deetz. All rights reserved.
+//   Copyright © 2021 Roger Deetz. All rights reserved.
 // </copyright>
 
 namespace Mooville.QUno.Universal
@@ -117,10 +117,9 @@ namespace Mooville.QUno.Universal
 
             if (file != null)
             {
-                //JsonGameSerializer serializer = new JsonGameSerializer();
-                //var game = serializer.LoadFromFileAsync(file);
-                // Since we cannot currently count on the results of 
-                // deserializing the game file, we are doing nothing.
+                UniversalGameSerializer serializer = new UniversalGameSerializer();
+                var game = await serializer.LoadFromFileAsync(file);
+                this.viewModel.OpenGame(game);
             }
 
             return;
@@ -137,8 +136,8 @@ namespace Mooville.QUno.Universal
 
             if (file != null)
             {
-                //JsonGameSerializer serializer = new JsonGameSerializer();
-                //serializer.SaveToFileAsync(this.viewModel.Game, file);
+                UniversalGameSerializer serializer = new UniversalGameSerializer();
+                serializer.SaveToFileAsync(this.viewModel.Game, file);
             }
 
             return;
