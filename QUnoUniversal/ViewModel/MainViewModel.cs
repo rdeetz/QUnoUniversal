@@ -128,6 +128,8 @@ namespace Mooville.QUno.Universal.ViewModel
 
         public void StartGame(IEnumerable<Player> players)
         {
+            // This method is deceptively similar to OpenGame, 
+            // but there are subtle differences when setting up a brand new game.
             this.computerPlayers.Clear();
             this.logIndex = 0;
             this.log.Clear();
@@ -159,6 +161,8 @@ namespace Mooville.QUno.Universal.ViewModel
 
         public void OpenGame(Game game)
         {
+            // This method is deceptively similar to StartGae,
+            // but there are subtle differences when hooking up an existing game.
             if (this.game != null)
             {
                 this.game.PlayerChanged -= new EventHandler(this.Game_PlayerChanged);
