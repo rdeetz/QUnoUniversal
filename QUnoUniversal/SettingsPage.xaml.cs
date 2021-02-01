@@ -1,5 +1,5 @@
 ﻿// <copyright file="MainPage.xaml.cs" company="Mooville">
-//   Copyright © 2018 Roger Deetz. All rights reserved.
+//   Copyright © 2021 Roger Deetz. All rights reserved.
 // </copyright>
 
 namespace Mooville.QUno.Universal
@@ -45,7 +45,7 @@ namespace Mooville.QUno.Universal
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
-            string versionText = version.ToString(); // @"4.5.0.0"
+            string versionText = version.ToString();
             this.textVersion.Text = String.Format(CultureInfo.CurrentCulture, textVersion.Text, versionText);
 
             this.settingsProvider.LoadSettings();
