@@ -22,6 +22,8 @@ namespace Mooville.QUno.Universal
     public sealed partial class MainPage : Page
     {
         private readonly MainViewModel viewModel;
+        private readonly string fileFilter;
+        private readonly string fileSuggestedName;
 
         public MainPage()
         {
@@ -30,11 +32,10 @@ namespace Mooville.QUno.Universal
             if (!DesignMode.DesignModeEnabled)
             {
                 var resourceLoader = ResourceLoader.GetForCurrentView();
-                var logMessagePlay = resourceLoader.GetString("LogMessagePlay");
-                var logMessageWildPlay = resourceLoader.GetString("LogMessageWildPlay");
-                var logMessageDraw = resourceLoader.GetString("LogMessageDraw");
+                this.fileFilter = resourceLoader.GetString("FileFilter");
+                this.fileSuggestedName = resourceLoader.GetString("FileSuggestedName");
 
-                this.viewModel = new MainViewModel(logMessagePlay, logMessageWildPlay, logMessageDraw);
+                this.viewModel = new MainViewModel();
                 this.DataContext = this.viewModel;
                 this.NavigationCacheMode = NavigationCacheMode.Required;
 
@@ -129,8 +130,8 @@ namespace Mooville.QUno.Universal
         {
             FileSavePicker fileSavePicker = new FileSavePicker();
             fileSavePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            fileSavePicker.FileTypeChoices.Add(@"QUno Files", new List<string>() { ".quno" });
-            fileSavePicker.SuggestedFileName = @"My Game";
+            fileSavePicker.FileTypeChoices.Add(this.fileFilter, new List<string>() { ".quno" });
+            fileSavePicker.SuggestedFileName = this.fileSuggestedName;
 
             StorageFile file = await fileSavePicker.PickSaveFileAsync();
 

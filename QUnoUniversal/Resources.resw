@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FileFilter" xml:space="preserve">
+    <value>QUno Files</value>
+  </data>
+  <data name="FileSuggestedName" xml:space="preserve">
+    <value>My Game</value>
+  </data>
   <data name="LogMessageDraw" xml:space="preserve">
     <value>{0} drew a card</value>
   </data>

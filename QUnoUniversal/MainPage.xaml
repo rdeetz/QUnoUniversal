@@ -10,6 +10,7 @@
     x:Class="Mooville.QUno.Universal.MainPage"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
+        <viewmodel:NotConverter x:Key="NotConverter"/>
         <viewmodel:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <viewmodel:ObjectToVisibilityConverter x:Key="ObjectToVisibilityConverter"/>
         <viewmodel:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
@@ -127,7 +128,7 @@
                     <FontIcon Glyph="&#xE197;"/>
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton x:Name="buttonSave" Label="Save" AccessKey="S">
+            <AppBarButton x:Name="buttonSave" Label="Save" AccessKey="S" IsEnabled="{x:Bind Path=ViewModel.IsGameNotInProgress, Mode=OneWay, Converter={StaticResource NotConverter}}">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE74E;"/>
                 </AppBarButton.Icon>

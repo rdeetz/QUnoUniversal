@@ -143,6 +143,7 @@
     <Compile Include="ViewModel\ColorToBrushConverter.cs" />
     <Compile Include="ViewModel\DirectionToSymbolConverter.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NotConverter.cs" />
     <Compile Include="ViewModel\ObjectToVisibilityConverter.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\UniversalNewGameViewModel.cs" />

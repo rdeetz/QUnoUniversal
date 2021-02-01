@@ -8,6 +8,7 @@ namespace Mooville.QUno.Universal.ViewModel
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using Windows.ApplicationModel.Resources;
     using Mooville.QUno.Model;
     using Mooville.QUno.ViewModel;
 
@@ -38,15 +39,17 @@ namespace Mooville.QUno.Universal.ViewModel
         private string logMessageWildPlay;
         private string logMessageDraw;
 
-        public MainViewModel(string logMessagePlay, string logMessageWildPlay, string logMessageDraw)
+        public MainViewModel()
         {
             this.computerPlayers = new ObservableCollection<Player>();
             this.isGameNotInProgress = true;
             this.logIndex = 0;
             this.log = new ObservableCollection<LogEntry>();
-            this.logMessagePlay = logMessagePlay;
-            this.logMessageWildPlay = logMessageWildPlay;
-            this.logMessageDraw = logMessageDraw;
+            
+            var resourceLoader = ResourceLoader.GetForCurrentView();
+            this.logMessagePlay = resourceLoader.GetString("LogMessagePlay");
+            this.logMessageWildPlay = resourceLoader.GetString("LogMessageWildPlay");
+            this.logMessageDraw = resourceLoader.GetString("LogMessageDraw");
         }
 
         public string Title
