@@ -79,22 +79,30 @@ namespace Mooville.QUno.Universal
         {
             Card card = this.listHumanHand.SelectedItem as Card;
 
-            if (card != null)
+            // For some reason, there is a case where the DataTemplate for the 
+            // selected card shows something different than the underlying 
+            // Card object, so the buttons were being disabled (if the card 
+            // cannot play) but the other gestures were allowing it to be played, 
+            // which resulted in a crash. So here we guard against that.
+            if (this.viewModel.CanPlayCard(card))
             {
-                if (card.Color == Color.Wild)
+                if (card != null)
                 {
-                    WildColorDialog wildColorDialog = new WildColorDialog();
-                    ContentDialogResult result = await wildColorDialog.ShowAsync();
-
-                    if (result == ContentDialogResult.Primary)
+                    if (card.Color == Color.Wild)
                     {
-                        Color? wildColor = wildColorDialog.SelectedColor as Color?;
-                        this.viewModel.PlayCard(card, wildColor);
+                        WildColorDialog wildColorDialog = new WildColorDialog();
+                        ContentDialogResult result = await wildColorDialog.ShowAsync();
+
+                        if (result == ContentDialogResult.Primary)
+                        {
+                            Color? wildColor = wildColorDialog.SelectedColor as Color?;
+                            this.viewModel.PlayCard(card, wildColor);
+                        }
                     }
-                }
-                else
-                {
-                    this.viewModel.PlayCard(card, null);
+                    else
+                    {
+                        this.viewModel.PlayCard(card, null);
+                    }
                 }
             }
 

@@ -14,6 +14,10 @@ namespace Mooville.QUno.Universal.Model
 
     public class UniversalGameSerializer : IUniversalGameSerializer
     {
+        // If this code looks a lot like QUnoLibrary's StandardGameSerializer, 
+        // that is because it is. The internals are the same but the 
+        // public interface has been adapted to work with the Windows.Storage APIs.
+
         public UniversalGameSerializer()
         {
         }

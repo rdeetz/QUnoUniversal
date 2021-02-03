@@ -151,9 +151,21 @@ namespace Mooville.QUno.Universal
             try
             {
                 StorageFile tempFile = await folder.GetFileAsync(@"temp.quno");
-                UniversalGameSerializer serializer = new UniversalGameSerializer();
-                game = await serializer.LoadFromFileAsync(tempFile);
-                await tempFile.DeleteAsync();
+
+                try
+                {
+                    UniversalGameSerializer serializer = new UniversalGameSerializer();
+                    game = await serializer.LoadFromFileAsync(tempFile);
+                }
+                catch (Exception)
+                {
+                    // Nothing to do here if we can't deserialize the game, 
+                    // so allow this method to return null and thus start a new game.
+                }
+                finally
+                {
+                    await tempFile.DeleteAsync();
+                }
             }
             catch (FileNotFoundException)
             {
