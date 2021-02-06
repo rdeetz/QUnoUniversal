@@ -7,7 +7,31 @@
     mc:Ignorable="d"
     x:Class="Mooville.QUno.Universal.SettingsPage"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <x:Double x:Key="SmallWindowBreakpoint">0</x:Double>
+        <x:Double x:Key="LargeWindowBreakpoint">479</x:Double>
+    </Page.Resources>
     <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowBreakpoint}"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="sliderDefaultComputerPlayers.Width" Value="384"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowBreakpoint}"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="sliderDefaultComputerPlayers.Width" Value="256"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -20,12 +44,12 @@
             <TextBlock Text="Settings" Style="{StaticResource HeaderTextBlockStyle}" VerticalAlignment="Center" Margin="16,0,0,0"/>
         </StackPanel>
         <StackPanel Margin="24" Grid.Row="1" Grid.Column="0">
-            <StackPanel Margin="0,0,0,12" HorizontalAlignment="Left">
+            <StackPanel Margin="0,0,0,12" MaxWidth="512" HorizontalAlignment="Left">
                 <TextBlock Text="New games" Style="{StaticResource SubheaderTextBlockStyle}" Margin="0,0,0,12"/>
                 <TextBlock Text="Player name:" Margin="0,0,0,8"/>
-                <TextBox x:Name="textDefaultHumanPlayerName" Width="512" Margin="0,0,0,8 " AccessKey="N"/>
+                <TextBox x:Name="textDefaultHumanPlayerName" Margin="0,0,0,8 " AccessKey="N"/>
                 <TextBlock Text="Number of computer players:" Margin="0,0,0,8"/>
-                <Slider x:Name="sliderDefaultComputerPlayers" Minimum="1" Maximum="9" Width="512" AccessKey="C"/>
+                <Slider x:Name="sliderDefaultComputerPlayers" Minimum="1" Maximum="9" HorizontalAlignment="Left" AccessKey="C"/>
             </StackPanel>
             <StackPanel Margin="0,0,0,12" HorizontalAlignment="Left">
                 <TextBlock Text="About this app" Style="{StaticResource SubheaderTextBlockStyle}" Margin="0,0,0,12"/>

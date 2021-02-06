@@ -19,7 +19,7 @@
         <DataTemplate x:Key="ColorItemTemplate" x:DataType="model:Color">
             <StackPanel>
                 <Rectangle
-                    Width="96" Height="96"
+                    Width="64" Height="64"
                     Fill="{x:Bind Mode=OneTime, Converter={StaticResource ColorToBrushConverter}}"/>
             </StackPanel>
         </DataTemplate>
@@ -32,7 +32,7 @@
             ItemTemplate="{StaticResource ColorItemTemplate}"
             ItemContainerStyle="{StaticResource ColorItemStyle}"
             SelectedItem="{x:Bind Path=SelectedColor, Mode=TwoWay}" 
-            Width="512" Height="256" Margin="0,0,0,8" SelectionMode="Single" AccessKey="W">
+            Height="128" SelectionMode="Single" AccessKey="W">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <ItemsWrapGrid HorizontalAlignment="Center" VerticalAlignment="Center"/>

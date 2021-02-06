@@ -14,7 +14,7 @@
         <TextBlock Text="Your name:"/>
         <TextBox x:Name="textHumanPlayerName" Text="{x:Bind Path=ViewModel.HumanPlayerName, Mode=TwoWay}" Margin="0,0,0,8" AccessKey="N"/>
         <TextBlock Text="Computer players:"/>
-        <ListView x:Name="listComputerPlayers" ItemsSource="{x:Bind Path=ViewModel.ComputerPlayers}" Width="512" Height="256" Margin="0,0,0,8" SelectionMode="Single" AccessKey="C">
+        <ListView x:Name="listComputerPlayers" ItemsSource="{x:Bind Path=ViewModel.ComputerPlayers}" Height="128" Margin="0,0,0,8" SelectionMode="Single" AccessKey="C">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="model:Player">
                     <TextBlock Text="{x:Bind Path=Name}"/>
