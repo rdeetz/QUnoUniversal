@@ -26,11 +26,11 @@
         </Style>
         <DataTemplate x:Key="PlayerItemTemplate" x:DataType="model:Player">
             <Grid 
-                Width="192" Height="192"
+                Width="128" Height="128"
                 Background="{ThemeResource SystemControlBackgroundAltHighBrush}"
                 BorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" BorderThickness="1">
-                <Ellipse Width="128" Height="128" Fill="{ThemeResource SystemControlBackgroundAccentBrush}"/>
-                <StackPanel Background="{ThemeResource SystemControlForegroundBaseMediumBrush}" Height="80" Padding="16" VerticalAlignment="Bottom">
+                <Ellipse Width="96" Height="96" Fill="{ThemeResource SystemControlBackgroundAccentBrush}"/>
+                <StackPanel Background="{ThemeResource SystemControlForegroundBaseMediumBrush}" Height="72" Padding="16" VerticalAlignment="Bottom">
                     <TextBlock 
                         Text="{x:Bind Path=Name, Mode=OneTime}"
                         Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" 
@@ -43,11 +43,11 @@
         </DataTemplate>
         <DataTemplate x:Key="CardItemTemplate" x:DataType="model:Card">
             <Grid 
-                Width="128" Height="196"
+                Width="96" Height="128"
                 Background="{x:Bind Path=Color, Mode=OneTime, Converter={StaticResource ColorToBrushConverter}}"
                 BorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" BorderThickness="1">
                 <Rectangle
-                    Width="80" Height="128"
+                    Width="64" Height="96"
                     Fill="{ThemeResource SystemControlBackgroundAltHighBrush}"/>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock 
@@ -81,7 +81,7 @@
                     ContentTemplate="{StaticResource CardItemTemplate}"
                     Grid.Row="0" Grid.Column="1"/>
                 <Rectangle 
-                    Width="128" Height="64" Margin="16"
+                    Width="96" Height="64" Margin="16"
                     Fill="{x:Bind Path=Deck.CurrentWildColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" 
                     Stroke="{ThemeResource SystemControlForegroundBaseHighBrush}"
                     Grid.Row="0" Grid.Column="2"/>
@@ -114,11 +114,37 @@
                         <AdaptiveTrigger MinWindowWidth="{StaticResource SmallWindowWidthBreakpoint}"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
+                        <Setter Target="gridLog.Visibility" Value="Collapsed"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState>
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{StaticResource LargeWindowWidthBreakpoint}"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="gridLog.Visibility" Value="Collapsed"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{StaticResource ExtraLargeWindowWidthBreakpoint}"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="gridLog.Visibility" Value="Visible"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="{StaticResource SmallWindowHeightBreakpoint}"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="{StaticResource LargeWindowHeightBreakpoint}"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                     </VisualState.Setters>
@@ -159,19 +185,24 @@
         </CommandBar>
         <Grid Margin="8" Grid.Row="1" Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <GridView 
                 ItemsSource="{x:Bind Path=ViewModel.ComputerPlayers, Mode=OneWay}"
                 ItemTemplate="{StaticResource PlayerItemTemplate}"
                 ItemContainerStyle="{StaticResource PlayerItemStyle}"
                 Grid.Row="0" Grid.Column="0">
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid Orientation="Horizontal" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
             </GridView>
             <ContentControl 
                 Content="{x:Bind Path=ViewModel.Game, Mode=OneWay}" 
@@ -194,13 +225,18 @@
                     ItemTemplate="{StaticResource CardItemTemplate}"
                     ItemContainerStyle="{StaticResource CardItemStyle}"
                     Grid.Row="0" Grid.Column="0">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Orientation="Horizontal" HorizontalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
                 </GridView>
                 <StackPanel Margin="0,8,0,8" Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0">
                     <Button x:Name="buttonPlay" Content="Play" MinWidth="75" Margin="0,0,8,0" AccessKey="P"/>
                     <Button x:Name="buttonDraw" Content="Draw" MinWidth="75" AccessKey="D"/>
                 </StackPanel>
             </Grid>
-            <Grid Margin="8" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
+            <Grid x:Name="gridLog" Margin="8" Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
@@ -213,6 +249,7 @@
                     x:Name="listLog" 
                     ItemsSource="{x:Bind Path=ViewModel.Log, Mode=OneWay}" 
                     ItemTemplate="{StaticResource LogItemTemplate}"
+                    MinWidth="256"
                     Grid.Row="1" Grid.Column="0"/>
             </Grid>
             <Grid 

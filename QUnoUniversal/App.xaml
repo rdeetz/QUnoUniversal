@@ -15,5 +15,6 @@
         <x:Double x:Key="SmallWindowHeightBreakpoint">0</x:Double>
         <x:Double x:Key="LargeWindowWidthBreakpoint">640</x:Double>
         <x:Double x:Key="LargeWindowHeightBreakpoint">480</x:Double>
+        <x:Double x:Key="ExtraLargeWindowWidthBreakpoint">1024</x:Double>
     </Application.Resources>
 </Application>
