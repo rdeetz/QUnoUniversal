@@ -5,8 +5,8 @@
     x:Class="Mooville.QUno.Universal.App"
     RequestedTheme="Light">
     <Application.Resources>
-        <SolidColorBrush x:Key="CardRedBrush" Color="#FFED7D31"/>
-        <SolidColorBrush x:Key="CardBlueBrush" Color="#FF5B9DB5"/>
+        <SolidColorBrush x:Key="CardRedBrush" Color="#FFED3131"/>
+        <SolidColorBrush x:Key="CardBlueBrush" Color="#FF5B84B5"/>
         <SolidColorBrush x:Key="CardYellowBrush" Color="#FFFFC000"/>
         <SolidColorBrush x:Key="CardGreenBrush" Color="#FF70AD47"/>
         <SolidColorBrush x:Key="CardBlackBrush" Color="#FF303030"/>
