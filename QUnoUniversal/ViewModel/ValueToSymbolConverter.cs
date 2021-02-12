@@ -1,10 +1,11 @@
-﻿namespace Mooville.QUno.Universal.ViewModel
+﻿// <copyright file="ValueToSymbolConverter.cs" company="Mooville">
+//   Copyright © 2020 Roger Deetz. All rights reserved.
+// </copyright>
+
+namespace Mooville.QUno.Universal.ViewModel
 {
     using System;
-    using Windows.UI.Xaml;
-    using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Data;
-    using Windows.UI.Xaml.Media;
     using Mooville.QUno.Model;
 
     public class ValueToSymbolConverter : IValueConverter

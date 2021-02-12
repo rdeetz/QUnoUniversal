@@ -1,4 +1,8 @@
-﻿namespace Mooville.QUno.Universal.ViewModel
+﻿// <copyright file="ColorToBrushConverter.cs" company="Mooville">
+//   Copyright © 2020 Roger Deetz. All rights reserved.
+// </copyright>
+
+namespace Mooville.QUno.Universal.ViewModel
 {
     using System;
     using Windows.UI.Xaml;
