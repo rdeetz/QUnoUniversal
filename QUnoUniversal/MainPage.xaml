@@ -110,7 +110,8 @@
             <Grid 
                 Width="96" Height="128"
                 Background="{x:Bind Path=Color, Mode=OneTime, Converter={StaticResource ColorToBrushConverter}}"
-                BorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" BorderThickness="1">
+                BorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" BorderThickness="1"
+                ToolTipService.ToolTip="{x:Bind Mode=OneWay}">
                 <Rectangle
                     Width="64" Height="96"
                     Fill="{ThemeResource SystemControlBackgroundAltHighBrush}"/>
@@ -149,6 +150,7 @@
                     Width="96" Height="64" Margin="16"
                     Fill="{x:Bind Path=Deck.CurrentWildColor, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}" 
                     Stroke="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                    ToolTipService.ToolTip="{x:Bind Path=Deck.CurrentWildColor, Mode=OneWay}"
                     Grid.Row="0" Grid.Column="2"/>
                 <TextBlock 
                     Text="Wild Color" 
