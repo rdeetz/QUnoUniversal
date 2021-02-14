@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     x:Class="Mooville.QUno.Universal.MainPage"
+    d:DataContext="{d:DesignInstance Type=viewmodel:MainViewModel}"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
         <viewmodel:NotConverter x:Key="NotConverter"/>
@@ -16,6 +17,7 @@
         <viewmodel:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
         <viewmodel:ValueToSymbolConverter x:Key="ValueToSymbolConverter"/>
         <viewmodel:DirectionToSymbolConverter x:Key="DirectionToSymbolConverter"/>
+        <viewmodel:PlayerTemplateSelector x:Key="PlayerTemplateSelector"/>
         <Style x:Key="PlayerItemStyle" TargetType="GridViewItem">
             <Setter Property="Margin" Value="4"/>
             <Setter Property="Padding" Value="8"/>
@@ -24,13 +26,76 @@
             <Setter Property="Margin" Value="4"/>
             <Setter Property="Padding" Value="8"/>
         </Style>
-        <DataTemplate x:Key="PlayerItemTemplate" x:DataType="model:Player">
+        <DataTemplate x:Key="PlayerItemTemplate1" x:DataType="model:Player">
             <Grid 
                 Width="128" Height="128"
                 Background="{ThemeResource SystemControlBackgroundAltHighBrush}"
                 BorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" BorderThickness="1">
-                <Ellipse Width="96" Height="96" Fill="{ThemeResource SystemControlBackgroundAccentBrush}"/>
-                <StackPanel Background="{ThemeResource SystemControlForegroundBaseMediumBrush}" Height="72" Padding="16" VerticalAlignment="Bottom">
+                <Rectangle Fill="{StaticResource CardBlueBrush}" Width="32" Height="64" VerticalAlignment="Bottom" Margin="0,16"/>
+                <Ellipse Fill="{StaticResource CardBlueBrush}" Width="64" Height="64" VerticalAlignment="Top" Margin="0,8"/>
+                <StackPanel Background="{ThemeResource SystemControlForegroundBaseMediumBrush}" Height="64" Padding="8" VerticalAlignment="Bottom">
+                    <TextBlock 
+                        Text="{x:Bind Path=Name, Mode=OneTime}"
+                        Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" 
+                        Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" Style="{ThemeResource BodyTextBlockStyle}">
+                        <Run Text="{x:Bind Path=Hand.Cards.Count, Mode=OneWay}"/> cards left
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="PlayerItemTemplate2" x:DataType="model:Player">
+            <Grid 
+                Width="128" Height="128"
+                Background="{ThemeResource SystemControlBackgroundAltHighBrush}"
+                BorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" BorderThickness="1">
+                <Rectangle Fill="{StaticResource CardRedBrush}" Width="48" Height="64" VerticalAlignment="Bottom" Margin="0,8"/>
+                <Ellipse Fill="{StaticResource CardRedBrush}" Width="48" Height="48" VerticalAlignment="Top" Margin="0,12"/>
+                <StackPanel Background="{ThemeResource SystemControlForegroundBaseMediumBrush}" Height="64" Padding="8" VerticalAlignment="Bottom">
+                    <TextBlock 
+                        Text="{x:Bind Path=Name, Mode=OneTime}"
+                        Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" 
+                        Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" Style="{ThemeResource BodyTextBlockStyle}">
+                        <Run Text="{x:Bind Path=Hand.Cards.Count, Mode=OneWay}"/> cards left
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="PlayerItemTemplate3" x:DataType="model:Player">
+            <Grid 
+                Width="128" Height="128"
+                Background="{ThemeResource SystemControlBackgroundAltHighBrush}"
+                BorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" BorderThickness="1">
+                <Rectangle Fill="{StaticResource CardGreenBrush}" Width="48" Height="64" RadiusX="16" RadiusY="16">
+                    <Rectangle.RenderTransform>
+                        <TranslateTransform X="0" Y="24"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                <Ellipse Fill="{StaticResource CardGreenBrush}" Width="64" Height="48" VerticalAlignment="Top" Margin="0,12"/>
+                <StackPanel Background="{ThemeResource SystemControlForegroundBaseMediumBrush}" Height="64" Padding="8" VerticalAlignment="Bottom">
+                    <TextBlock 
+                        Text="{x:Bind Path=Name, Mode=OneTime}"
+                        Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" 
+                        Style="{ThemeResource TitleTextBlockStyle}"/>
+                    <TextBlock Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" Style="{ThemeResource BodyTextBlockStyle}">
+                        <Run Text="{x:Bind Path=Hand.Cards.Count, Mode=OneWay}"/> cards left
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="PlayerItemTemplate4" x:DataType="model:Player">
+            <Grid 
+                Width="128" Height="128"
+                Background="{ThemeResource SystemControlBackgroundAltHighBrush}"
+                BorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}" BorderThickness="1">
+                <Rectangle Fill="{StaticResource CardYellowBrush}" Width="48" Height="48" RenderTransformOrigin="0.5,0.5">
+                    <Rectangle.RenderTransform>
+                        <CompositeTransform Rotation="45" ScaleX="1" ScaleY="1" SkewX="0" SkewY="0" TranslateX="0" TranslateY="16"/>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
+                <Ellipse Fill="{StaticResource CardYellowBrush}" Width="48" Height="48" VerticalAlignment="Top" Margin="0,8"/>
+                <StackPanel Background="{ThemeResource SystemControlForegroundBaseMediumBrush}" Height="64" Padding="8" VerticalAlignment="Bottom">
                     <TextBlock 
                         Text="{x:Bind Path=Name, Mode=OneTime}"
                         Foreground="{ThemeResource SystemControlBackgroundAltHighBrush}" 
@@ -195,7 +260,7 @@
             </Grid.ColumnDefinitions>
             <GridView 
                 ItemsSource="{x:Bind Path=ViewModel.ComputerPlayers, Mode=OneWay}"
-                ItemTemplate="{StaticResource PlayerItemTemplate}"
+                ItemTemplateSelector="{StaticResource PlayerTemplateSelector}"
                 ItemContainerStyle="{StaticResource PlayerItemStyle}"
                 Grid.Row="0" Grid.Column="0">
                 <GridView.ItemsPanel>
@@ -278,6 +343,14 @@
                     <Run Text="{x:Bind Path=ViewModel.Winner.Name, Mode=OneWay}"/> is the winner!
                 </TextBlock>
             </Grid>
+            <!--
+            <StackPanel Orientation="Horizontal">
+                <ContentControl Content="ContentControl" ContentTemplate="{StaticResource PlayerItemTemplate1}"/>
+                <ContentControl Content="ContentControl" ContentTemplate="{StaticResource PlayerItemTemplate2}"/>
+                <ContentControl Content="ContentControl" ContentTemplate="{StaticResource PlayerItemTemplate3}"/>
+                <ContentControl Content="ContentControl" ContentTemplate="{StaticResource PlayerItemTemplate4}"/>
+            </StackPanel>
+            -->
         </Grid>
     </Grid>
 </Page>

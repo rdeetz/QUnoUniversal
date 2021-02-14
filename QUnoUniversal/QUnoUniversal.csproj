@@ -145,6 +145,7 @@
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\NotConverter.cs" />
     <Compile Include="ViewModel\ObjectToVisibilityConverter.cs" />
+    <Compile Include="ViewModel\PlayerTemplateSelector.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="ViewModel\UniversalNewGameViewModel.cs" />
     <Compile Include="ViewModel\UniversalSettingsProvider.cs" />
