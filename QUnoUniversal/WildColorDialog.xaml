@@ -20,7 +20,8 @@
             <StackPanel>
                 <Rectangle
                     Width="64" Height="64"
-                    Fill="{x:Bind Mode=OneTime, Converter={StaticResource ColorToBrushConverter}}"/>
+                    Fill="{x:Bind Mode=OneTime, Converter={StaticResource ColorToBrushConverter}}"
+                    ToolTipService.ToolTip="{x:Bind Mode=OneTime}"/>
             </StackPanel>
         </DataTemplate>
     </ContentDialog.Resources>
