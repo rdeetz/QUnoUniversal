@@ -74,6 +74,7 @@
                 <TextBlock Text="QUno" FontWeight="Bold"/>
                 <TextBlock x:Name="textVersion" Text="Version {0}"/>
                 <TextBlock Text="Copyright © 2021 Roger Deetz. All rights reserved."/>
+                <TextBlock x:Name="textLivy" Text="The first line of code for what would become this game was written in 1996. My sister Olivia loved to play Uno, and when I went away to college and taught myself to program, I started working on this game so she could play even if I wasn't there. Over the years it has been reimplemented many times to keep up with the technology of the day. She doesn't play anymore, but I expect I'll keep working on it." TextWrapping="Wrap" Margin="0,16,0,0" Visibility="Collapsed"/>
             </StackPanel>
         </StackPanel>
     </Grid>

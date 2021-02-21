@@ -1,4 +1,4 @@
-﻿// <copyright file="MainPage.xaml.cs" company="Mooville">
+﻿// <copyright file="SettingsPage.xaml.cs" company="Mooville">
 //   Copyright © 2021 Roger Deetz. All rights reserved.
 // </copyright>
 
@@ -12,6 +12,7 @@ namespace Mooville.QUno.Universal
     using Windows.ApplicationModel;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
+    using Windows.UI.Xaml.Input;
     using Windows.UI.Xaml.Navigation;
 
     public sealed partial class SettingsPage : Page
@@ -30,6 +31,7 @@ namespace Mooville.QUno.Universal
                 this.Unloaded += this.Page_Unloaded;
                 this.buttonBack.Click += this.ButtonBack_Click;
                 this.textDefaultHumanPlayerName.TextChanged += this.TextDefaultHumanPlayerName_TextChanged;
+                this.textVersion.Tapped += this.TextVersion_Tapped;
             }
         }
 
@@ -77,6 +79,20 @@ namespace Mooville.QUno.Universal
         private void TextDefaultHumanPlayerName_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.buttonBack.IsEnabled = !String.IsNullOrEmpty(textDefaultHumanPlayerName.Text.Trim());
+
+            return;
+        }
+
+        private void TextVersion_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (textLivy.Visibility == Visibility.Collapsed)
+            {
+                textLivy.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                textLivy.Visibility = Visibility.Collapsed;
+            }
 
             return;
         }
