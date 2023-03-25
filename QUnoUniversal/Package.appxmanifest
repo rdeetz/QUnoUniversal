@@ -7,9 +7,9 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="Mooville.QUno.Universal.v7"
+    Name="Mooville.QUno.Universal.v5"
     Publisher="CN=Roger Deetz"
-    Version="7.0.0.0" />
+    Version="5.0.5.0" />
 
   <mp:PhoneIdentity PhoneProductId="79cca3fc-83bd-4c16-83c2-14a7fd35d140" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

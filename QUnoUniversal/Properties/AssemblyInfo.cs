@@ -13,6 +13,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright (c) 2019-2023 Roger Deetz. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("7.0.0.0")]
-[assembly: AssemblyFileVersion("7.0.0.0")]
+[assembly: AssemblyVersion("5.0.5.0")]
+[assembly: AssemblyFileVersion("5.0.5.0")]
 [assembly: ComVisible(false)]
